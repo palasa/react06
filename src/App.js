@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import { Route, Routes,  NavLink as Link, } from 'react-router-dom'
+import { Article, Home, Users, NotFound } from './views'
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+    <div>
+      App
+      <ul>
+        <li><Link to="/home">首页</Link></li>
+        <li><Link to="/article">文章</Link></li>
+        <li><Link to="/users">用户</Link></li>
+      </ul>
+      
+      <Routes>
+        {/* <Route path='/home' render={()=>{
+          return <Home x={1}/>
+        }} /> */}
+        <Route path='/home' element={<Home/>}/>
 
-export default App;
+        {/* 方便配置article子路由 */}
+        <Route path='/article/*' element={<Article/>} />
+        <Route path='/users' element={<Users/>} />
+
+        {/* 打开/时默认跳转到Home , react-router-dom v6 */}        
+        <Route path='/' element={<Home/>} />
+
+        <Route path='*' element={<NotFound/>} />
+      </Routes>
+
+
+    </div>
+  )
+}
